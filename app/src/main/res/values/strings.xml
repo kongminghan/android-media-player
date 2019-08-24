@@ -7,4 +7,7 @@
     <!--Bottom navigation title-->
     <string name="video">Video</string>
     <string name="music">Music</string>
+
+    <!--Music-->
+    <string name="album_art">album_art</string>
 </resources>
