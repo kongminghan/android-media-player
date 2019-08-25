@@ -22,7 +22,7 @@ class SimpleMusicPlayer(private val context: Context) {
     fun prepareSource(mediaSource: MediaSource) {
         release()
         setupMedia()
-        internalPrepareVideo(mediaSource)
+        internalPrepareMedia(mediaSource)
     }
 
     private fun setupMedia() {
@@ -37,7 +37,7 @@ class SimpleMusicPlayer(private val context: Context) {
         }
     }
 
-    private fun internalPrepareVideo(mediaSource: MediaSource) {
+    private fun internalPrepareMedia(mediaSource: MediaSource) {
         player?.prepare(mediaSource)
     }
 }
