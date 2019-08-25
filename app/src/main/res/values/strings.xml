@@ -12,4 +12,8 @@
     <string name="album_art">album_art</string>
     <string name="music_note">music_note</string>
     <string name="brighten_your_day_with_some_musics">Brighten your day with some musics!</string>
+    
+    <!--Video-->
+    <string name="video_thumb">video_thumb</string>
+    <string name="no_video">No video found. Please come back later.</string>
 </resources>
