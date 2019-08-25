@@ -5,4 +5,7 @@
     <color name="colorAccent">#03DAC6</color>
 
     <color name="light_gray">#e0e0e0</color>
+    <color name="teal_900">#004d40</color>
+    <color name="blue_grey_100">#cfd8dc</color>
+    <color name="album_overlay">#90EEEEEE</color>
 </resources>
