@@ -1,22 +1,33 @@
 package com.minghan.lomotif.media.viewmodel
 
+import android.app.Application
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
+import com.minghan.lomotif.media.BuildConfig
 import com.minghan.lomotif.media.data.Music
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.net.URI
 import javax.inject.Inject
 
-class MusicVM @Inject constructor() : ViewModel() {
+class MusicVM @Inject constructor(private val app: Application) : AndroidViewModel(app) {
 
     val musics = MutableLiveData<List<Music>>()
+    val musicMediaSource = MutableLiveData<MediaSource>()
 
     fun musicFiles(context: Context): Job = viewModelScope.launch(Dispatchers.IO) {
         // Initialize an empty mutable list of music
@@ -24,14 +35,12 @@ class MusicVM @Inject constructor() : ViewModel() {
 
         // Get the external storage media store audio uri
         val uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        // val uri: Uri = MediaStore.Files.getContentUri("external")
 
         // IS_MUSIC : Non-zero if the audio file is music
         val selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0"
 
         // Sort the musics
         val sortOrder = MediaStore.Audio.Media.TITLE + " ASC"
-        //val sortOrder = MediaStore.Audio.Media.TITLE + " DESC"
 
         // Query the external storage for music files
         val cursor: Cursor? = context.contentResolver.query(
@@ -86,5 +95,20 @@ class MusicVM @Inject constructor() : ViewModel() {
 
         // Finally, return the music files list
         musics.postValue(list)
+    }
+
+    fun requestMusicUri(music: Music) {
+        val uri = Uri.parse(music.path)
+        val mediaSource = mediaSources(uri)
+        musicMediaSource.postValue(mediaSource)
+    }
+
+    private fun mediaSources(uri: Uri): MediaSource {
+        val dataSourceFactory = DefaultDataSourceFactory(
+            app.applicationContext,
+            Util.getUserAgent(app.applicationContext, BuildConfig.APPLICATION_ID)
+        )
+
+        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }
 }
