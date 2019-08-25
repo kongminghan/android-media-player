@@ -2,6 +2,7 @@ package com.minghan.lomotif.media.dagger
 
 import android.app.Application
 import com.minghan.lomotif.media.MainApplication
+import com.minghan.lomotif.media.MusicPlayerFragment
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -25,4 +26,7 @@ interface MainComponent : AndroidInjector<MainApplication> {
 
         fun build(): MainComponent
     }
+
+    fun inject(musicPlayer: MusicPlayerFragment)
+
 }
