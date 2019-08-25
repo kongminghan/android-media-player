@@ -50,7 +50,8 @@ class MovieFragment : DaggerFragment() {
         )
 
         videoAdapter = VideoAdapter {
-
+            VideoPlayerFragment.newInstance(it)
+                .show(childFragmentManager, VideoPlayerFragment.TAG)
         }
 
         videoVM.videos.observe(this@MovieFragment, Observer {
