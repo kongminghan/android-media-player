@@ -9,21 +9,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.audio.AudioListener
-import com.google.android.exoplayer2.audio.AudioRendererEventListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.minghan.lomotif.media.dagger.Injector
 import com.minghan.lomotif.media.dagger.ViewModelFactory
 import com.minghan.lomotif.media.data.Music
-import com.minghan.lomotif.media.data.SimpleMusicPlayer
+import com.minghan.lomotif.media.data.SimpleMediaPlayer
 import com.minghan.lomotif.media.extension.getViewModel
 import com.minghan.lomotif.media.viewmodel.MusicVM
 import kotlinx.android.synthetic.main.fragment_music_player.*
@@ -42,7 +40,7 @@ class MusicPlayerFragment : BottomSheetDialogFragment(), CoroutineScope {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val job = SupervisorJob()
-    private var musicPlayer: SimpleMusicPlayer? = null
+    private var musicPlayer: SimpleMediaPlayer? = null
     private var music: Music? = null
     private var musicVM: MusicVM? = null
 
@@ -126,7 +124,7 @@ class MusicPlayerFragment : BottomSheetDialogFragment(), CoroutineScope {
 
     private fun startAudio() {
         musicPlayer?.release()
-        musicPlayer = SimpleMusicPlayer(context!!)
+        musicPlayer = SimpleMediaPlayer(context!!)
 
         music?.let {
             musicVM?.requestMusicUri(it)

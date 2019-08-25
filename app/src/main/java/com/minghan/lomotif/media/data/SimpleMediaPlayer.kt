@@ -5,8 +5,12 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.ui.PlayerView
 
-class SimpleMusicPlayer(private val context: Context) {
+class SimpleMediaPlayer(
+    private val context: Context,
+    private val playerView: PlayerView? = null
+) {
 
     var player: ExoPlayer? = null
 
@@ -22,7 +26,7 @@ class SimpleMusicPlayer(private val context: Context) {
     fun prepareSource(mediaSource: MediaSource) {
         release()
         setupMedia()
-        internalPrepareVideo(mediaSource)
+        internalPrepareMedia(mediaSource)
     }
 
     private fun setupMedia() {
@@ -33,11 +37,13 @@ class SimpleMusicPlayer(private val context: Context) {
         }
         player?.run {
             playWhenReady = true
-            repeatMode = Player.REPEAT_MODE_ALL
+            repeatMode = Player.REPEAT_MODE_OFF
         }
+
+        playerView?.player = player
     }
 
-    private fun internalPrepareVideo(mediaSource: MediaSource) {
+    private fun internalPrepareMedia(mediaSource: MediaSource) {
         player?.prepare(mediaSource)
     }
 }
