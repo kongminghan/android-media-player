@@ -43,13 +43,15 @@ class MusicFragment : DaggerFragment() {
         context?.checkPermissions(
             arrayOf(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO
             ),
             onGranted = { musicVM.musicFiles(context!!) }
         )
 
         musicAdapter = MusicAdapter {
-            // TODO handle onclick music item
+            MusicPlayerFragment.newInstance(it)
+                .show(childFragmentManager, MusicPlayerFragment.TAG)
         }
 
         musicVM.musics.observe(this@MusicFragment, Observer {
