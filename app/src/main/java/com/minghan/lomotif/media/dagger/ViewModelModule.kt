@@ -3,6 +3,7 @@ package com.minghan.lomotif.media.dagger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.minghan.lomotif.media.viewmodel.MusicVM
+import com.minghan.lomotif.media.viewmodel.VideoVM
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -50,6 +51,12 @@ abstract class ViewModelModule {
     @Singleton
     @ViewModelKey(MusicVM::class)
     internal abstract fun musicVM(viewModel: MusicVM): ViewModel
+
+    @Binds
+    @IntoMap
+    @Singleton
+    @ViewModelKey(VideoVM::class)
+    internal abstract fun videoVM(viewModel: VideoVM): ViewModel
 
     // more viewmodels here
 
