@@ -1,5 +1,6 @@
 package com.minghan.lomotif.media
 
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.minghan.lomotif.media.dagger.DaggerMainComponent
 import com.minghan.lomotif.media.dagger.MainComponent
 import dagger.android.AndroidInjector
@@ -21,6 +22,7 @@ class MainApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        Fresco.initialize(this)
         staticObject = this
     }
 

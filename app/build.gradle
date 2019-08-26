@@ -18,6 +18,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        it.each {
+            it.buildConfigField "String", "PIXABAY_URL", "\"https://pixabay.com/\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -56,9 +59,9 @@ dependencies {
     // Permission
     implementation 'com.nabinbhandari.android:permissions:3.8'
 
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    // Fresco for image loading
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+    implementation 'com.facebook.fresco:webpsupport:2.0.0'
 
     // Video player
     implementation 'com.google.android.exoplayer:exoplayer:2.10.1'

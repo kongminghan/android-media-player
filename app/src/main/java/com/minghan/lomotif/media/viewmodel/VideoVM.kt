@@ -57,6 +57,13 @@ class VideoVM @Inject constructor(private val app: Application) : AndroidViewMod
                 val videoPath: String = cursor.getString(path)
                 val videoMs = cursor.getLong(duration)
 
+                val thumb = MediaStore.Video.Thumbnails.getThumbnail(
+                    context.contentResolver,
+                    videoId,
+                    MediaStore.Images.Thumbnails.MINI_KIND,  // 512 x 384
+                    null
+                )
+
                 val minutes = videoMs / 1000 / 60
                 val seconds = videoMs / 1000 % 60
 
@@ -66,7 +73,8 @@ class VideoVM @Inject constructor(private val app: Application) : AndroidViewMod
                         id = videoId,
                         title = videoTitle,
                         path = videoPath,
-                        duration = "${minutes}m ${seconds}s"
+                        duration = "${minutes}m ${seconds}s",
+                        albumThumb = thumb
                     )
                 )
             } while (cursor.moveToNext())

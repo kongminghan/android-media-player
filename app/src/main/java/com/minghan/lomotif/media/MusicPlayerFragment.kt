@@ -10,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.audio.AudioListener
@@ -92,17 +90,7 @@ class MusicPlayerFragment : BottomSheetDialogFragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        GlideApp.with(image)
-            .load(music?.albumArtUri)
-            .placeholder(R.drawable.album_art)
-            .apply {
-                transform(
-                    CenterCrop(),
-                    RoundedCorners(8)
-                )
-            }
-            .into(image)
-
+        image.setImageURI(music?.albumArtUri, this.context)
         tv_title.text = music?.title
         tv_subtitle.text = "${music?.artist} | ${music?.albumName}"
     }
