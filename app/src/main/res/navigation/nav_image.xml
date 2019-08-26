@@ -9,5 +9,12 @@
         android:id="@+id/galleryFragment"
         android:name="com.minghan.lomotif.media.GalleryFragment"
         android:label="@string/gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_gallery_to_imageDetail"
+            app:destination="@id/imageDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageDetailFragment"
+        android:name="com.minghan.lomotif.media.ImageDetailFragment" />
 </navigation>

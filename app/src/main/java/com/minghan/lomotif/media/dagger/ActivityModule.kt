@@ -21,4 +21,7 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract fun galleryFragment(): GalleryFragment
 
+    @ContributesAndroidInjector
+    abstract fun imageDetailFragment(): ImageDetailFragment
+
 }

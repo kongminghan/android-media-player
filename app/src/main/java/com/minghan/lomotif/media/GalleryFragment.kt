@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.minghan.lomotif.media.adapter.ImageAdapter
 import com.minghan.lomotif.media.dagger.ViewModelFactory
@@ -40,8 +42,17 @@ class GalleryFragment : DaggerFragment() {
 
         imageVM = activity?.getViewModel(viewModelFactory)
 
-        imageAdapter = ImageAdapter {
-
+        imageAdapter = ImageAdapter { view, image ->
+            imageVM?.selectedImage?.postValue(image)
+            val extras = FragmentNavigatorExtras(
+                view to "imageView"
+            )
+            findNavController().navigate(
+                R.id.action_gallery_to_imageDetail,
+                null,
+                null,
+                extras
+            )
         }
     }
 
