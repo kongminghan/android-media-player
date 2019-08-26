@@ -1,18 +1,16 @@
 package com.minghan.lomotif.media.adapter
 
 import android.annotation.SuppressLint
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.minghan.lomotif.media.GlideApp
 import com.minghan.lomotif.media.R
 import com.minghan.lomotif.media.data.Video
 import kotlinx.android.synthetic.main.item_video.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class VideoAdapter(private val onClick: (video: Video) -> Unit) :
     RecyclerView.Adapter<VideoAdapter.VideoVH>() {
@@ -46,21 +44,7 @@ class VideoAdapter(private val onClick: (video: Video) -> Unit) :
 
                     tv_title.text = video.title
                     tv_duration.text = video.duration
-
-                    val thumbnail = withContext(Dispatchers.Default) {
-                        MediaStore.Video.Thumbnails.getThumbnail(
-                            v.context.contentResolver,
-                            video.id,
-                            MediaStore.Images.Thumbnails.MINI_KIND,  // 512 x 384
-                            null
-                        )
-                    }
-
-                    GlideApp.with(image)
-                        .load(thumbnail)
-                        .placeholder(R.drawable.video_thumb)
-                        .apply { transform(CenterCrop()) }
-                        .into(image)
+                    image.setImageBitmap(video.albumThumb)
                 }
             } catch (e: Throwable) {
             }

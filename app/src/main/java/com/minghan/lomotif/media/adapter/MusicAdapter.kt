@@ -5,12 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.minghan.lomotif.media.GlideApp
 import com.minghan.lomotif.media.R
 import com.minghan.lomotif.media.data.Music
-import com.minghan.lomotif.media.extension.dpToPx
 import kotlinx.android.synthetic.main.item_music.view.*
 
 class MusicAdapter(private val onClick: (music: Music) -> Unit) :
@@ -41,17 +37,7 @@ class MusicAdapter(private val onClick: (music: Music) -> Unit) :
         fun bind(music: Music) {
             try {
                 v.apply {
-                    GlideApp.with(image)
-                        .load(music.albumArtUri)
-                        .placeholder(R.drawable.album_art)
-                        .apply {
-                            transform(
-                                CenterCrop(),
-                                RoundedCorners(context.dpToPx(4).toInt())
-                            )
-                        }
-                        .into(image)
-
+                    image.setImageURI(music.albumArtUri, image.context)
                     tv_title.text = music.title
                     tv_album.text = music.albumName
                     tv_artist.text = music.artist
