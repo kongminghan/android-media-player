@@ -62,6 +62,8 @@ dependencies {
     // Fresco for image loading
     implementation 'com.facebook.fresco:fresco:2.0.0'
     implementation 'com.facebook.fresco:webpsupport:2.0.0'
+    // Image zooming
+    implementation 'me.relex:photodraweeview:2.0.0'
 
     // Video player
     implementation 'com.google.android.exoplayer:exoplayer:2.10.1'
