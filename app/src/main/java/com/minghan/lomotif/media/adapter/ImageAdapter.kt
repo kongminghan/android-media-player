@@ -1,17 +1,22 @@
 package com.minghan.lomotif.media.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.view.SimpleDraweeView
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.minghan.lomotif.media.R
 import com.minghan.lomotif.media.data.Image
 import kotlinx.android.synthetic.main.item_image.view.*
+import java.util.*
 
 
-class ImageAdapter(val onClick: (image: Image) -> Unit) :
+class ImageAdapter(val onClick: (imageView: SimpleDraweeView, image: Image) -> Unit) :
     PagedListAdapter<Image, RecyclerView.ViewHolder>(COMPARATOR) {
 
     companion object {
@@ -40,9 +45,17 @@ class ImageAdapter(val onClick: (image: Image) -> Unit) :
             if (image == null) return
 
             try {
+                val request = ImageRequestBuilder
+                    .newBuilderWithSource(Uri.parse(image.largeImageURL))
+                    .build()
+
+                val imagePipeline = Fresco.getImagePipeline()
+                imagePipeline.prefetchToDiskCache(request, v.context)
+
                 v.apply {
+                    this.image.transitionName = Date().time.toString()
                     this.image.setImageURI(image.previewURL)
-                    v.setOnClickListener { onClick(image) }
+                    v.setOnClickListener { onClick(this.image, image) }
                 }
             } catch (e: Throwable) {
                 e.printStackTrace()
