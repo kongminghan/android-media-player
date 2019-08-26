@@ -1,9 +1,11 @@
 package com.minghan.lomotif.media.extension
 
 import android.content.Context
+import android.util.DisplayMetrics
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import java.util.ArrayList
+import kotlin.math.roundToInt
 
 fun Context.checkPermissions(
     permissions: Array<String>,
@@ -36,4 +38,9 @@ fun Context.checkPermissions(
             super.onJustBlocked(context, justBlockedList, deniedPermissions)
         }
     })
+}
+
+fun Context.dpToPx(dp: Int): Float {
+    val displayMetrics = this.resources.displayMetrics
+    return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt().toFloat()
 }
