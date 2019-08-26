@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/album_art"
-        android:src="@drawable/album_art"
+        android:src="@drawable/album_art_rounded"
         app:layout_constraintBottom_toBottomOf="@+id/tv_artist"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
