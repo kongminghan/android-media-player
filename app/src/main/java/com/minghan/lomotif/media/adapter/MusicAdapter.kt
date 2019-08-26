@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.minghan.lomotif.media.GlideApp
 import com.minghan.lomotif.media.R
 import com.minghan.lomotif.media.data.Music
+import com.minghan.lomotif.media.extension.dpToPx
 import kotlinx.android.synthetic.main.item_music.view.*
 
 class MusicAdapter(private val onClick: (music: Music) -> Unit) :
@@ -46,7 +47,7 @@ class MusicAdapter(private val onClick: (music: Music) -> Unit) :
                         .apply {
                             transform(
                                 CenterCrop(),
-                                RoundedCorners(8)
+                                RoundedCorners(context.dpToPx(4).toInt())
                             )
                         }
                         .into(image)
