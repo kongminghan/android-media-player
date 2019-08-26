@@ -6,6 +6,7 @@ data class Image(
     val previewURL: String?,
     val views: Int?,
     val likes: Int?,
+    val favorites: Int?,
     val user: String?,
     val userImageURL: String?,
     val tags: String?,
