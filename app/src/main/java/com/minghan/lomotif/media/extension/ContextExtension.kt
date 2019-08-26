@@ -57,3 +57,13 @@ val Context.screenWidth: Int
         }
         return screenWidth
     }
+
+val Context.statusBarHeight: Int
+    get() {
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) {
+            resources.getDimensionPixelSize(resourceId)
+        } else {
+            0
+        }
+    }
