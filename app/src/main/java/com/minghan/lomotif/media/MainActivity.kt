@@ -1,27 +1,35 @@
 package com.minghan.lomotif.media
 
 import android.os.Bundle
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.lifecycle.Observer
+import com.minghan.lomotif.media.extension.setupWithNavController
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
-
-    private val navController by lazy {
-        findNavController(R.id.nav_host_fragment)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // setup navigation
-        bottom_nav.setupWithNavController(navController)
+        val navControllerLiveData = bottom_nav.setupWithNavController(
+            navGraphIds = listOf(
+                R.navigation.nav_music,
+                R.navigation.nav_video,
+                R.navigation.nav_image
+            ),
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.nav_host_fragment,
+            intent = intent
+        )
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            // update toolbar title
-            toolbar.title = destination.label
-        }
+        navControllerLiveData.observe(this, Observer {
+            it?.addOnDestinationChangedListener { _, destination, _ ->
+                // update toolbar title
+                toolbar.title = destination.label
+            }
+        })
     }
+
 }
