@@ -177,7 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_file_download_black_24dp"
-                    android:tint="@android:color/darker_gray"
+                    android:tint="@color/gray_600"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -186,7 +186,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:singleLine="true"
-                    android:text="@string/download" />
+                    android:text="@string/download"
+                    android:textColor="@color/gray_600" />
 
             </LinearLayout>
 

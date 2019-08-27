@@ -74,6 +74,7 @@ class ImageDetailFragment : DaggerFragment() {
                 ?: return@setOnClickListener
 
             (activity as? MainActivity)?.download(url)
+            context?.toast(R.string.downloading)
         }
     }
 

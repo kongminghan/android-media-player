@@ -10,6 +10,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.minghan.lomotif.media.adapter.ImageAdapter
+import com.minghan.lomotif.media.constant.Constant.Companion.LOADING
 import com.minghan.lomotif.media.dagger.ViewModelFactory
 import com.minghan.lomotif.media.data.SpaceColumnItemDecoration
 import com.minghan.lomotif.media.extension.getViewModel
@@ -17,6 +18,7 @@ import com.minghan.lomotif.media.extension.screenWidth
 import com.minghan.lomotif.media.viewmodel.ImageVM
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_gallery.*
+import kotlinx.android.synthetic.main.fragment_image_detail.*
 import javax.inject.Inject
 
 /**
@@ -28,6 +30,7 @@ class GalleryFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private var imageVM: ImageVM? = null
     private lateinit var imageAdapter: ImageAdapter
+    private var isRefreshing = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +65,21 @@ class GalleryFragment : DaggerFragment() {
         imageVM?.images?.observe(this, Observer {
             imageAdapter.submitList(it)
         })
+
+        imageVM?.networkState?.observe(this, Observer {
+            if (it == LOADING) {
+                if (isRefreshing) {
+                    swipe_refresh.isRefreshing = true
+                }
+                progress.visibility = View.VISIBLE
+            } else {
+                if (isRefreshing) {
+                    swipe_refresh.isRefreshing = false
+                    isRefreshing = false
+                }
+                progress.visibility = View.GONE
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,6 +102,11 @@ class GalleryFragment : DaggerFragment() {
                     )
                 )
             )
+        }
+
+        swipe_refresh.setOnRefreshListener {
+            isRefreshing = true
+            imageVM?.images?.value?.dataSource?.invalidate()
         }
     }
 

@@ -40,15 +40,6 @@ class MovieFragment : DaggerFragment() {
         videoVM = activity?.getViewModel(viewModelFactory)
             ?: throw Throwable("Video viewmodel not init")
 
-        context?.checkPermissions(
-            arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO
-            ),
-            onGranted = { videoVM.videoFiles(context!!) }
-        )
-
         videoAdapter = VideoAdapter {
             VideoPlayerFragment.newInstance(it)
                 .show(childFragmentManager, VideoPlayerFragment.TAG)
