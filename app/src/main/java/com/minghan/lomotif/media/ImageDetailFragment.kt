@@ -1,6 +1,7 @@
 package com.minghan.lomotif.media
 
 
+import android.Manifest
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.imagepipeline.image.ImageInfo
 import com.facebook.imagepipeline.request.ImageRequest
 import com.minghan.lomotif.media.dagger.ViewModelFactory
+import com.minghan.lomotif.media.extension.checkPermissions
 import com.minghan.lomotif.media.extension.getViewModel
 import com.minghan.lomotif.media.extension.statusBarHeight
 import com.minghan.lomotif.media.extension.toast
@@ -73,8 +75,19 @@ class ImageDetailFragment : DaggerFragment() {
             val url = imageVM?.selectedImage?.value?.largeImageURL
                 ?: return@setOnClickListener
 
-            (activity as? MainActivity)?.download(url)
-            context?.toast(R.string.downloading)
+            context?.checkPermissions(
+                arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                onGranted = {
+                    (activity as? MainActivity)?.download(url)
+                    context?.toast(R.string.downloading)
+                },
+                onDenied = {
+                    context?.toast(R.string.no_permission_download)
+                }
+            )
         }
     }
 
