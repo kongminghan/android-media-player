@@ -34,7 +34,7 @@ android {
             it.buildConfigField "String", "PIXABAY_URL", "\"https://pixabay.com/\""
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
