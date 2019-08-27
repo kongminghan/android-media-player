@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Lomotif Media</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Bottom navigation title-->
+    <string name="video">Video</string>
+    <string name="music">Music</string>
+    <string name="gallery">Gallery</string>
+
+    <!--Music-->
+    <string name="brighten_your_day_with_some_musics">Brighten your day with some musics!</string>
+
+    <!--Video-->
+    <string name="no_video">No video found. Please come back later.</string>
+    <string name="download">Download</string>
+
+    <!--Image-->
+    <string name="num_views">%d views</string>
+    <string name="downloading">Downloading…</string>
+    <string name="downloaded">Image saved to device.</string>
+    <string name="download_failed">Failed to download requested image.</string>
+    <string name="no_network">No active internet connection available.</string>
 </resources>
