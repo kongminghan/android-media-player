@@ -19,8 +19,8 @@ class ImageVM @Inject constructor(
     private val dataFactory: ImageDataFactory = ImageDataFactory(imageApi = imageApi)
 
     private val config = PagedList.Config.Builder()
-        .setPageSize(20)
-        .setInitialLoadSizeHint(80)
+        .setPageSize(100)
+        .setInitialLoadSizeHint(150)
         .setEnablePlaceholders(true)
         .build()
 

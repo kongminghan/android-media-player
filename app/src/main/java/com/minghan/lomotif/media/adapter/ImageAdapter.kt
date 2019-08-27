@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
+import com.facebook.imagepipeline.common.Priority
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.minghan.lomotif.media.R
 import com.minghan.lomotif.media.data.Image
@@ -47,6 +48,7 @@ class ImageAdapter(val onClick: (imageView: SimpleDraweeView, image: Image) -> U
             try {
                 val request = ImageRequestBuilder
                     .newBuilderWithSource(Uri.parse(image.largeImageURL))
+                    .setRequestPriority(Priority.LOW)
                     .build()
 
                 val imagePipeline = Fresco.getImagePipeline()
