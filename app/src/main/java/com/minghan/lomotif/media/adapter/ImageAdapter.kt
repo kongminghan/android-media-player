@@ -46,18 +46,18 @@ class ImageAdapter(val onClick: (imageView: SimpleDraweeView, image: Image) -> U
             if (image == null) return
 
             try {
-                val request = ImageRequestBuilder
-                    .newBuilderWithSource(Uri.parse(image.largeImageURL))
-                    .setRequestPriority(Priority.LOW)
-                    .build()
-
-                val imagePipeline = Fresco.getImagePipeline()
-                imagePipeline.prefetchToDiskCache(request, v.context)
-
                 v.apply {
                     this.image.transitionName = Date().time.toString()
                     this.image.setImageURI(image.previewURL)
                     v.setOnClickListener { onClick(this.image, image) }
+
+                    val request = ImageRequestBuilder
+                        .newBuilderWithSource(Uri.parse(image.largeImageURL))
+                        .setRequestPriority(Priority.LOW)
+                        .build()
+
+                    val imagePipeline = Fresco.getImagePipeline()
+                    imagePipeline.prefetchToDiskCache(request, v.context)
                 }
             } catch (e: Throwable) {
                 e.printStackTrace()
