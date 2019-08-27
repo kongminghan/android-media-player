@@ -22,4 +22,5 @@
     <string name="downloaded">Image saved to device.</string>
     <string name="download_failed">Failed to download requested image.</string>
     <string name="no_network">No active internet connection available.</string>
+    <string name="no_permission_download">You\'ll need to allow the permissions to download images.</string>
 </resources>
