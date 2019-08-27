@@ -10,6 +10,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.minghan.lomotif.media.adapter.ImageAdapter
+import com.minghan.lomotif.media.constant.Constant.Companion.LOADING
 import com.minghan.lomotif.media.dagger.ViewModelFactory
 import com.minghan.lomotif.media.data.SpaceColumnItemDecoration
 import com.minghan.lomotif.media.extension.getViewModel
@@ -61,6 +62,14 @@ class GalleryFragment : DaggerFragment() {
 
         imageVM?.images?.observe(this, Observer {
             imageAdapter.submitList(it)
+        })
+
+        imageVM?.networkState?.observe(this, Observer {
+            if (it == LOADING) {
+                progress.visibility = View.VISIBLE
+            } else {
+                progress.visibility = View.GONE
+            }
         })
     }
 
