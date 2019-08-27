@@ -15,7 +15,7 @@ android {
         release {
             keyAlias configProperties['key_alias']
             keyPassword configProperties['key_password']
-            storeFile rootProject.file("vechnology.jks")
+            storeFile rootProject.file("lomotif.keystore")
             storePassword configProperties['keystore_password']
         }
     }
