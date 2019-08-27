@@ -1,38 +1,38 @@
 package com.minghan.lomotif.media
 
+import android.Manifest
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.Observer
-import com.minghan.lomotif.media.extension.setupWithNavController
-import com.minghan.lomotif.media.extension.statusBarHeight
-import com.minghan.lomotif.media.extension.toast
+import com.minghan.lomotif.media.dagger.ViewModelFactory
+import com.minghan.lomotif.media.extension.*
+import com.minghan.lomotif.media.viewmodel.MusicVM
+import com.minghan.lomotif.media.viewmodel.VideoVM
 import com.tonyodev.fetch2.*
 import com.tonyodev.fetch2core.DownloadBlock
 import com.tonyodev.fetch2core.Func
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 
 class MainActivity : DaggerAppCompatActivity() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var musicVM: MusicVM
+    private lateinit var videoVM: VideoVM
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupContentView()
 
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = Color.TRANSPARENT
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-
-        with(toolbar) {
-            setPadding(0, statusBarHeight, 0, 0)
-            layoutParams.height = statusBarHeight + toolbar.layoutParams.height
-        }
+        musicVM = getViewModel(viewModelFactory)
+        videoVM = getViewModel(viewModelFactory)
 
         // setup navigation
         val navControllerLiveData = bottom_nav.setupWithNavController(
@@ -60,6 +60,32 @@ class MainActivity : DaggerAppCompatActivity() {
                 }
             }
         })
+
+        checkPermissions(
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO
+            ),
+            onGranted = {
+                musicVM.musicFiles(this)
+                videoVM.videoFiles(this)
+            }
+        )
+    }
+
+    private fun setupContentView() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = Color.TRANSPARENT
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
+        with(toolbar) {
+            setPadding(0, statusBarHeight, 0, 0)
+            layoutParams.height = statusBarHeight + toolbar.layoutParams.height
+        }
     }
 
     fun download(url: String) {
