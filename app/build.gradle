@@ -6,7 +6,19 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+def configPropertiesFile = rootProject.file("config.properties")
+def configProperties = new Properties()
+configProperties.load(new FileInputStream(configPropertiesFile))
+
 android {
+    signingConfigs {
+        release {
+            keyAlias configProperties['key_alias']
+            keyPassword configProperties['key_password']
+            storeFile rootProject.file("vechnology.jks")
+            storePassword configProperties['keystore_password']
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -24,6 +36,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
