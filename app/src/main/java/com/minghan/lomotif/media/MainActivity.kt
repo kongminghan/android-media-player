@@ -84,7 +84,6 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private val fetchListener = object : FetchListener {
         override fun onAdded(download: Download) {
-            toast(R.string.downloading)
         }
 
         override fun onCancelled(download: Download) {
