@@ -2,6 +2,7 @@ package com.minghan.lomotif.media.extension
 
 import android.content.Context
 import android.util.DisplayMetrics
+import android.view.WindowManager
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import java.util.ArrayList
@@ -44,3 +45,25 @@ fun Context.dpToPx(dp: Int): Float {
     val displayMetrics = this.resources.displayMetrics
     return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt().toFloat()
 }
+
+val Context.screenWidth: Int
+    get() {
+        var screenWidth = 0
+        val wm = this.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
+        wm?.let {
+            val metrics = DisplayMetrics()
+            wm.defaultDisplay.getMetrics(metrics)
+            screenWidth = metrics.widthPixels
+        }
+        return screenWidth
+    }
+
+val Context.statusBarHeight: Int
+    get() {
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) {
+            resources.getDimensionPixelSize(resourceId)
+        } else {
+            0
+        }
+    }

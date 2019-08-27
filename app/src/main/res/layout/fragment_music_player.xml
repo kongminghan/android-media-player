@@ -20,12 +20,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.8">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/album_art"
-            app:layout_constraintDimensionRatio="1:1" />
+            app:actualImageScaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:placeholderImage="@drawable/album_art"
+            app:placeholderImageScaleType="centerCrop" />
 
     </com.google.android.material.card.MaterialCardView>
 

@@ -1,9 +1,6 @@
 package com.minghan.lomotif.media.dagger
 
-import com.minghan.lomotif.media.MainActivity
-import com.minghan.lomotif.media.MovieFragment
-import com.minghan.lomotif.media.MusicFragment
-import com.minghan.lomotif.media.VideoPlayerFragment
+import com.minghan.lomotif.media.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -20,5 +17,11 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun videoPlayerFragment(): VideoPlayerFragment
+
+    @ContributesAndroidInjector
+    abstract fun galleryFragment(): GalleryFragment
+
+    @ContributesAndroidInjector
+    abstract fun imageDetailFragment(): ImageDetailFragment
 
 }
