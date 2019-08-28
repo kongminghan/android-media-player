@@ -79,8 +79,11 @@ dependencies {
     // Image zooming
     implementation 'me.relex:photodraweeview:2.0.0'
 
-    // Video player
+    // ExoPlayer for playing music and video
     implementation 'com.google.android.exoplayer:exoplayer:2.10.1'
+    implementation ("com.github.PaulWoitaschek.ExoPlayer-Extensions:extension-flac:2.10.2") {
+        transitive = false
+    }
 
     // Audio visualizer
     implementation 'com.gauravk.audiovisualizer:audiovisualizer:0.9.2'
