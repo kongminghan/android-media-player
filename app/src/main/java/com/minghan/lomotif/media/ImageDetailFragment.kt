@@ -5,6 +5,7 @@ import android.Manifest
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -15,13 +16,14 @@ import com.facebook.imagepipeline.request.ImageRequest
 import com.minghan.lomotif.media.dagger.ViewModelFactory
 import com.minghan.lomotif.media.extension.checkPermissions
 import com.minghan.lomotif.media.extension.getViewModel
-import com.minghan.lomotif.media.extension.statusBarHeight
 import com.minghan.lomotif.media.extension.toast
 import com.minghan.lomotif.media.viewmodel.ImageVM
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_image_detail.*
-import kotlinx.android.synthetic.main.fragment_image_detail.view.*
 import javax.inject.Inject
+import com.minghan.lomotif.media.extension.statusBarHeight
+import kotlinx.android.synthetic.main.fragment_image_detail.view.*
+import qiu.niorgai.StatusBarCompat
 
 
 /**
@@ -39,6 +41,9 @@ class ImageDetailFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_image_detail, container, false)
+
+        StatusBarCompat.translucentStatusBar(activity!!, true)
+        StatusBarCompat.changeToLightStatusBar(activity!!)
 
         with(view.toolbar) {
             setPadding(0, view.context.statusBarHeight, 0, 0)
@@ -117,6 +122,19 @@ class ImageDetailFragment : DaggerFragment() {
             favorites.text = it.favorites?.toString() ?: "0"
             likes.text = it.likes?.toString() ?: "0"
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        StatusBarCompat.changeToLightStatusBar(activity!!)
+
+        val mContentView = activity!!.window.findViewById(Window.ID_ANDROID_CONTENT) as ViewGroup
+        val mChildView = mContentView.getChildAt(0)
+        if (mChildView != null) {
+            mChildView.fitsSystemWindows = false
+            ViewCompat.requestApplyInsets(mChildView)
+        }
     }
 
 }

@@ -98,6 +98,12 @@ dependencies {
 
     // Downloader
     implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
+
+    // StatusBar utility
+    implementation ('com.github.niorgai:StatusBarCompat:2.3.3', {
+        exclude group: 'androidx.appcompat:appcompat'
+        exclude group: 'com.google.android.material:material'
+    })
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

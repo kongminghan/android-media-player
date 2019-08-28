@@ -77,15 +77,15 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun setupContentView() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.statusBarColor = Color.TRANSPARENT
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//        )
 
-        with(toolbar) {
-            setPadding(0, statusBarHeight, 0, 0)
-            layoutParams.height = statusBarHeight + toolbar.layoutParams.height
-        }
+//        with(toolbar) {
+//            setPadding(0, statusBarHeight, 0, 0)
+//            layoutParams.height = statusBarHeight + toolbar.layoutParams.height
+//        }
     }
 
     fun download(url: String) {
