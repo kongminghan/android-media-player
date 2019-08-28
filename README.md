@@ -1,4 +1,4 @@
-## Android App for Lomotif Test
+## Android Media App
 
 ### Keys & Secrets
 
