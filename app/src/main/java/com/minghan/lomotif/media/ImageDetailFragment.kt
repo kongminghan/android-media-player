@@ -4,9 +4,7 @@ package com.minghan.lomotif.media
 import android.Manifest
 import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
@@ -42,14 +40,10 @@ class ImageDetailFragment : DaggerFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_image_detail, container, false)
 
-        val params = ViewGroup.MarginLayoutParams(view.btn_back.layoutParams)
-        params.setMargins(
-            0,
-            resources.getDimensionPixelSize(R.dimen.nav_icon_margin) + (view.context?.statusBarHeight
-                ?: 0),
-            0,
-            0
-        )
+        with(view.toolbar) {
+            setPadding(0, view.context.statusBarHeight, 0, 0)
+            layoutParams.height = view.context.statusBarHeight + toolbar.layoutParams.height
+        }
 
         return view
     }
@@ -67,7 +61,7 @@ class ImageDetailFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn_back.setOnClickListener {
+        toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
 
