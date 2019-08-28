@@ -13,6 +13,13 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp" />
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp" />
+
     <LinearLayout
         android:id="@+id/empty_placeholder"
         android:layout_width="match_parent"
