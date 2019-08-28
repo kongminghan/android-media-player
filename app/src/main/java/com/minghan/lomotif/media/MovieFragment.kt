@@ -1,7 +1,6 @@
 package com.minghan.lomotif.media
 
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.minghan.lomotif.media.adapter.VideoAdapter
 import com.minghan.lomotif.media.dagger.ViewModelFactory
-import com.minghan.lomotif.media.extension.checkPermissions
 import com.minghan.lomotif.media.extension.getViewModel
 import com.minghan.lomotif.media.viewmodel.VideoVM
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.android.synthetic.main.fragment_movie.view.*
 import javax.inject.Inject
 
 /**
@@ -44,16 +43,6 @@ class MovieFragment : DaggerFragment() {
             VideoPlayerFragment.newInstance(it)
                 .show(childFragmentManager, VideoPlayerFragment.TAG)
         }
-
-        videoVM.videos.observe(this@MovieFragment, Observer {
-            it ?: return@Observer
-            videoAdapter.swap(it)
-
-            empty_placeholder.visibility = if (it.isEmpty())
-                View.VISIBLE
-            else
-                View.GONE
-        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,6 +52,22 @@ class MovieFragment : DaggerFragment() {
             adapter = videoAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        videoVM.videos.observe(this@MovieFragment, Observer {
+            it ?: return@Observer
+            videoAdapter.swap(it)
+
+            empty_placeholder.visibility = if (it.isEmpty())
+                View.VISIBLE
+            else
+                View.GONE
+
+            view?.progress?.visibility = View.GONE
+        })
     }
 
 }

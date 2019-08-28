@@ -1,7 +1,6 @@
 package com.minghan.lomotif.media
 
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.minghan.lomotif.media.adapter.MusicAdapter
 import com.minghan.lomotif.media.dagger.ViewModelFactory
-import com.minghan.lomotif.media.extension.checkPermissions
 import com.minghan.lomotif.media.extension.getViewModel
 import com.minghan.lomotif.media.viewmodel.MusicVM
 import dagger.android.support.DaggerFragment
@@ -44,6 +42,19 @@ class MusicFragment : DaggerFragment() {
             MusicPlayerFragment.newInstance(it)
                 .show(childFragmentManager, MusicPlayerFragment.TAG)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        rv_musics.apply {
+            adapter = musicAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         musicVM.musics.observe(this@MusicFragment, Observer {
             it ?: return@Observer
@@ -54,14 +65,5 @@ class MusicFragment : DaggerFragment() {
             else
                 View.GONE
         })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        rv_musics.apply {
-            adapter = musicAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
     }
 }
